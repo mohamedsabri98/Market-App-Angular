@@ -1,0 +1,19 @@
+<div class="mt-4">
+  <div class="my-2 w-25">
+    <app-select [data]="categories" [title]="'categories'" (selectedValue)="filterCategory($event)" />
+  </div>
+  <div class="row" *ngIf="!spinner">
+    <!--
+      error in routerlink
+      <div class="col-md-3 col-sm-12" *ngFor="let product of products" routerLink="/product-details/'{{product.id}}'">
+    -->
+    <div class="col-md-3 col-sm-12" *ngFor="let product of products">
+      <app-product [data]="product" (item)="addToCart($event)" />
+    </div>
+
+  </div>
+  <div class="text-center w-100" *ngIf="spinner">
+    <app-spinner />
+  </div>
+
+</div>
