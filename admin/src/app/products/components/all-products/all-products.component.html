@@ -1,10 +1,27 @@
 <div class="mt-4">
   <div class="my-2 w-25">
-    <app-select [data]="categories" [title]="'categories'" (selectedValue)="filterCategory($event)" />
+    <a routerLink="/addProduct" class="btn btn-outline-success m-4 ">add new product</a>
   </div>
   <div class="row" *ngIf="!spinner">
-    <div class="col-md-3 col-sm-12" *ngFor="let product of products">
-      <app-product [data]="product" (item)="addToCart($event)" />
+    <div class="col-md-3 col-sm-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>price</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let product of products">
+          <tr>
+            <td><img src="{{product.image}}" alt=""></td>
+            <td>{{product.title}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.price}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="text-center w-100" *ngIf="spinner">

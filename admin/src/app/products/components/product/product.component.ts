@@ -10,8 +10,11 @@ export class ProductComponent {
   amount: number = 0;
   @Input() data: any = {};
   @Output() item = new EventEmitter();
+
   constructor() {}
+
   ngOnInit(): void {}
+
   add() {
     this.item.emit({ amount: this.data, quantity: this.amount });
   }
