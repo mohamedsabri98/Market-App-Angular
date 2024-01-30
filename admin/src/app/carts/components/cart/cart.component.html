@@ -1,46 +1,86 @@
 <div class="cartBox">
-  <h1 class="text-danger">Shopping Cart</h1>
-  <div class="headCart">
-    <p class="lead">you have <label class="text-danger">{{cartProducts.length}}</label> item in your cart</p>
-    <span class="text-danger card-header" (click)="clearData()">clear shopping cart</span>
-  </div>
+  <form [formGroup]="form">
+    <div class="row justify-content-center mt-5 mb-5">
+      <div class="col-md-3">
+        <label for="">Start Date</label>
+        <input type="date" class="form-control" formControlName="start">
+      </div>
+      <div class="col-md-3">
+        <label for="">End Date</label>
+        <input type="date" class="form-control" formControlName="end">
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-success" (click)="applyFilter()">Apply</button>
+      </div>
+    </div>
+  </form>
   <table class="table table-striped">
     <thead>
-      <tr>
+      <tr class="text-center">
         <th></th>
-        <th>Name</th>
-        <th>Price</th>
-        <th style="width: 25%;">Quantity</th>
-        <th>Total</th>
-        <th></th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of cartProducts; let index=index ">
-        <td><img src="{{item.amount.image}}" alt=""></td>
-        <td>{{item.amount.title}}</td>
-        <td>{{item.amount.price}} L.E</td>
+      <tr *ngFor="let item of carts; let index=index ">
+        <td></td>
+        <td>{{item.date | date:"shortDate"}}
+        <td>{{item.products.length}}</td>
         <td>
-          <div class="quantity">
-            <button class="btn btn-dark" (click)="addAmount(index)">+</button>
-            <input type="number" min="1" class="form-control" (change)="detectChange()" [(ngModel)]="item.quantity">
-            <button class="btn btn-dark" (click)="minsAmount(index)">-</button>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-danger m-2" (click)="deleteCart(item.id)">Delete</button>
+            <button class="btn btn-primary m-2" data-toggle="modal" data-target="#exampleModalLong"
+              (click)="view(index)">View</button>
           </div>
         </td>
-        <td>{{item.amount.price * item.quantity}} L.E</td>
-        <td><button class="btn btn-danger" (click)="deleteProduct(index)">Delete</button></td>
       </tr>
     </tbody>
-    <tfoot>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>Total: {{total}} L.E</th>
-        <th><button class="btn btn-success" (click)="addCart()">order now</button></th>
-      </tr>
-    </tfoot>
   </table>
 </div>
-<div class="alert alert-success" role="alert" *ngIf="successCard"><strong>Well done</strong> your order is successfully sent</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 900px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <tr class="text-center">
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of products; let index=index ">
+              <td><img src="{{item.item.image}}" alt="" style="max-width: 20%; max-height: 15%;"></td>
+              <td>{{item.item.title}}
+              <td>{{item.item.price}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.quantity * item.item.price}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -23,7 +23,6 @@ export class AllProductsComponent {
     this.spinner = true;
     return this.service.getAllProducts().subscribe(
       (res: any) => {
-        // console.log(res);
         this.products = res;
         this.spinner = false;
       },
@@ -39,7 +38,6 @@ export class AllProductsComponent {
 
     return this.service.getAllCategories().subscribe(
       (res: any) => {
-        // console.log(res);
         this.categories = res;
         this.spinner = false;
       },
