@@ -21,7 +21,7 @@ export class AllProductsComponent {
     this.form = this.build.group({
       title: ['', [Validators.required]],
       price: ['', [Validators.required]],
-      decription: ['', [Validators.required]],
+      description: ['', [Validators.required]],
       image: ['', [Validators.required]],
       category: ['', [Validators.required]],
     });
@@ -109,5 +109,23 @@ export class AllProductsComponent {
     this.service.createProduct(model).subscribe((res) => {
       alert('product added successfully');
     });
+  }
+
+  updateProduct(product: any) {
+    /*this.form.get('title')?.setValue(product.title);
+    this.form.get('description')?.setValue(product.description);
+    this.form.get('price')?.setValue(product.price);
+    this.form.get('category')?.setValue(product.category);
+    this.form.get('image')?.setValue(product.image);
+    this.base64Url = product.image;
+    console.log(this.form.value)*/
+    this.form.patchValue({
+      title: product.title,
+      price: product.price,
+      description: product.description,
+      image: product.image,
+      category: product.category,
+    });
+    this.base64Url = product.image;
   }
 }
