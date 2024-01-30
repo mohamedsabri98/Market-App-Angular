@@ -127,5 +127,13 @@ export class AllProductsComponent {
       category: product.category,
     });
     this.base64Url = product.image;
+    this.service.updateProduct(product.id, this.form.value).subscribe(
+      (res) => {
+        alert('product updated successfully');
+      },
+      (err) => {
+        alert('error updating product');
+      }
+    );
   }
 }

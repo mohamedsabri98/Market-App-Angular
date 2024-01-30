@@ -26,7 +26,11 @@ export class ProductsService {
     return this.http.get('https://fakestoreapi.com/products/' + id);
   }
 
-  createProduct(model:any){
-    return this.http.post('https://fakestoreapi.com/products/' , model)
+  createProduct(model: any) {
+    return this.http.post('https://fakestoreapi.com/products/', model);
+  }
+
+  updateProduct(id: any, product: any) {
+    return this.http.put('https://fakestoreapi.com/products/' + id, product);
   }
 }
