@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-all-products',
@@ -11,10 +12,19 @@ export class AllProductsComponent {
   categories: any[] = [];
   spinner: boolean = false;
   cartProducts: any[] = [];
+  base64Url: any = '';
+  form!: FormGroup;
 
-  constructor(private service: ProductsService) {}
+  constructor(private service: ProductsService, private build: FormBuilder) {}
 
   ngOnInit(): void {
+    this.form = this.build.group({
+      title: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+      decription: ['', [Validators.required]],
+      image: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+    });
     this.getProducts();
     this.getCategries();
   }
@@ -78,5 +88,26 @@ export class AllProductsComponent {
       this.cartProducts.push(event);
       localStorage.setItem('cart', JSON.stringify(this.cartProducts));
     }
+  }
+
+  getSelctedCategries(event: any) {
+    this.form.get('category')?.setValue(event.target.value);
+  }
+
+  getImagePath(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.base64Url = reader.result;
+      this.form.get('image')?.setValue(this.base64Url);
+    };
+  }
+
+  addProduct() {
+    const model = this.form.value;
+    this.service.createProduct(model).subscribe((res) => {
+      alert('product added successfully');
+    });
   }
 }
